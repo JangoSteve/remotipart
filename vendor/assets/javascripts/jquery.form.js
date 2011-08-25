@@ -1,6 +1,6 @@
 /*!
  * jQuery Form Plugin
- * version: 2.82 (15-JUN-2011)
+ * version: 2.84 (12-AUG-2011)
  * @requires jQuery v1.3.2 or later
  *
  * Examples and documentation at: http://malsup.com/jquery/form/
@@ -50,7 +50,7 @@ $.fn.ajaxSubmit = function(options) {
 		return this;
 	}
 	
-	var method, action, url, $form = this;;
+	var method, action, url, $form = this;
 
 	if (typeof options == 'function') {
 		options = { success: options };
@@ -91,7 +91,7 @@ $.fn.ajaxSubmit = function(options) {
 	if (options.data) {
 		options.extraData = options.data;
 		for (n in options.data) {
-			if(options.data[n] instanceof Array) {
+			if( $.isArray(options.data[n]) ) {
 				for (var k in options.data[n]) {
 					a.push( { name: n, value: options.data[n][k] } );
 				}
@@ -188,12 +188,14 @@ $.fn.ajaxSubmit = function(options) {
 
 	// private function for handling file uploads (hat tip to YAHOO!)
 	function fileUpload(a) {
-		var form = $form[0], i, s, g, id, $io, io, xhr, sub, n, timedOut, timeoutHandle;
+		var form = $form[0], el, i, s, g, id, $io, io, xhr, sub, n, timedOut, timeoutHandle;
+        var useProp = !!$.fn.prop;
 
         if (a) {
         	// ensure that every serialized input is still enabled
           	for (i=0; i < a.length; i++) {
-            	$(form[a[i].name]).attr('disabled', false);
+                el = $(form[a[i].name]);
+                el[ useProp ? 'prop' : 'attr' ]('disabled', false);
           	}
         }
 
