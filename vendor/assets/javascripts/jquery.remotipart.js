@@ -23,7 +23,7 @@
           settings.processData = false;
 
           // Modify some settings to integrate JS request with rails helpers and middleware
-          if (settings.dataType === undefined) { settings.dataType = 'script *'; }
+          if (settings.dataType === undefined) { settings.dataType = '*'; }
           settings.data.push({name: 'remotipart_submitted', value: true});
 
           // Allow remotipartSubmit to be cancelled if needed
