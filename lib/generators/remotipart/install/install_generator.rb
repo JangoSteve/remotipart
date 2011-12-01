@@ -9,12 +9,12 @@ module Remotipart
 
       def install_iframe_transport
         say_status "copying", "IframeTransport.js #{Remotipart::Rails::IFRAMETRANSPORT_VERSION}", :green
-        copy_file "jquery.iframe-transport.js", "public/javascripts/jquery.iframe-transport.js"
+        copy_file "jquery.iframe-transport.js", "#{Remotipart::INSTALL_PATH}/jquery.iframe-transport.js"
       end
 
       def install_remotipart
         say_status "copying", "Remotipart.js #{Remotipart::Rails::VERSION}", :green
-        copy_file 'jquery.remotipart.js', 'public/javascripts/jquery.remotipart.js'
+        copy_file 'jquery.remotipart.js', "#{Remotipart::INSTALL_PATH}/jquery.remotipart.js"
       end
     end
   end
