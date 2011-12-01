@@ -1,4 +1,6 @@
 require 'rubygems'
+require 'bundler/setup'
+require 'appraisal'
 require 'rake'
 require File.expand_path('../lib/remotipart/rails/version', __FILE__)
 
