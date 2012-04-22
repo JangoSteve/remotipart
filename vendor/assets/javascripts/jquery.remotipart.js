@@ -1,4 +1,5 @@
 //= require jquery.iframe-transport.js
+//= require jquery.formdata-transport.js
 //= require_self
 
 (function($) {
@@ -17,7 +18,10 @@
           // delete settings.beforeSend;
           delete settings.beforeSend;
 
-          settings.iframe      = true;
+          if (typeof FormData !== 'undefined')
+            settings.formdata  = true;
+          else
+            settings.iframe    = true;
           settings.files       = $($.rails.fileInputSelector, form);
           settings.data        = form.serializeArray();
           settings.processData = false;
