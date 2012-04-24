@@ -73,7 +73,9 @@
         };
         if (typeof xhr.upload !== 'undefined') xhr.upload.onprogress = function(e) {
           var progEvent = $.Event('ajax:progress.remotipart');
-          $.extend(progEvent,e)
+          progEvent.lengthComputable = e.lengthComputable;
+          progEvent.total = e.total;
+          progEvent.loaded = e.loaded;
           form.trigger(progEvent);
         }
         else form.trigger('ajax:progress:notsupported.remotipart');
