@@ -1,6 +1,6 @@
 module Remotipart
 
-  # A middleware to look for our form parameters and 
+  # A middleware to look for our form parameters and
   # encourage Rails to respond with the requested format
   class Middleware
     def initialize app
@@ -16,15 +16,15 @@ module Remotipart
       end
       params = env['rack.request.form_hash']
 
-      # This was using an iframe transport, and is therefore an XHR
-      # This is required if we're going to override the http_accept
-      if params and params['X-Requested-With'] == 'IFrame'
-        env['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest'
-      end
-
-      # Override the accepted format, because it isn't what we really want
-      if params and params['X-Http-Accept']
-        env['HTTP_ACCEPT'] = params['X-Http-Accept']
+      if params
+        if params['X-Requested-With'] == 'IFrame' || env['HTTP_X_REQUESTED_WITH'] == 'FormData'
+          params['remotipart_submitted'] = params['X-Requested-With'] || env['HTTP_X_REQUESTED_WITH']
+          # This was using a custom transport, and is therefore an XHR
+          # This is required if we're going to override the http_accept
+          env['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest'
+        end
+        # For iFrame transport, override the accepted format, because it isn't what we really want
+        env['HTTP_ACCEPT'] = params['X-Http-Accept'] if params['X-Http-Accept']
       end
 
       @app.call(env)
