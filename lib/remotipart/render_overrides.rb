@@ -7,7 +7,7 @@ module Remotipart
     def render *args
       super
       if remotipart_submitted?
-        response.body = %{<textarea data-type=\"#{content_type}\" response-code=\"#{response.response_code}\">#{escape_once(response.body)}</textarea>}
+        response.body = %{<textarea data-type=\"#{content_type}\" data-response-code=\"#{response.response_code}\">#{escape_once(response.body)}</textarea>}
         response.content_type = Mime::HTML
       end
       response_body
