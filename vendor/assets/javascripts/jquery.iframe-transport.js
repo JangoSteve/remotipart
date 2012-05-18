@@ -187,16 +187,15 @@
             // actual payload is embedded in a `<textarea>` element, and
             // prepares the required conversions to be made in that case.
             iframe.unbind("load").bind("load", function() {
-
               var doc = this.contentWindow ? this.contentWindow.document :
                 (this.contentDocument ? this.contentDocument : this.document),
                 root = doc.documentElement ? doc.documentElement : doc.body,
-                textarea = root.getElementsByTagName("textarea")[0],
-                type = textarea ? textarea.getAttribute("data-type") : null;
+                textarea = $($(root).text()),
+                type = textarea ? textarea.data('type') : null;
 
-              var status = textarea ? parseInt(textarea.getAttribute("response-code")) : 200,
+              var status = textarea ? parseInt(textarea.data("response-code")) : 200,
                 statusText = "OK",
-                responses = { text: type ? textarea.value : root ? root.innerHTML : null },
+                responses = { text: type ? textarea.val() : root ? $(root).text() : null },
                 headers = "Content-Type: " + (type || "text/html")
 
               completeCallback(status, statusText, responses, headers);
