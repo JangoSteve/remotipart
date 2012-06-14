@@ -35,6 +35,12 @@
           if (settings.dataType === undefined) { settings.dataType = 'script *'; }
           settings.data.push({name: 'remotipart_submitted', value: true});
 
+          var button = form.data('ujs:submit-button.remotipart');
+          if (button) {
+            settings.data.push(button);
+            form.data('ujs:submit-button.remotipart', null);
+          }
+
           // Allow remotipartSubmit to be cancelled if needed
           if ($.rails.fire(form, 'ajax:remotipartSubmit', [xhr, settings])) {
             // Second verse, same as the first
@@ -62,6 +68,9 @@
 
   $(document).on('ajax:aborted:file', 'form', function(){
     var form = $(this);
+
+    // ujs:submit-button get cleared by $.rails.handleRemote so clone it we can add it to the submitted data
+    form.data('ujs:submit-button.remotipart', form.data('ujs:submit-button'));
 
     remotipart.setup(form);
 
