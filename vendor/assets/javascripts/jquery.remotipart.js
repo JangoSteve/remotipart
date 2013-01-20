@@ -51,7 +51,7 @@
     }
   };
 
-  $('form').live('ajax:aborted:file', function(){
+  $(document).on('ajax:aborted:file', 'form', function(){
     var form = $(this);
 
     remotipart.setup(form);
