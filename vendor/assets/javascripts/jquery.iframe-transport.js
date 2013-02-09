@@ -182,6 +182,13 @@
           // into the DOM, and is used to prepare the actual submission.
           iframe.bind("load", function() {
 
+            function toJQueryProcessibleDataTypes (dataType) {
+              switch (dataType) {
+                case "application/json": return ["text", "json"];
+                default: return dataType.split("/");
+              }
+            }
+
             // The second load event gets fired when the response to the form
             // submission is received. The implementation detects whether the
             // actual payload is embedded in a `<textarea>` element, and
@@ -197,8 +204,11 @@
               var status = textarea ? parseInt(textarea.getAttribute("response-code")) : 200,
                 statusText = "OK",
                 responses = { text: type ? textarea.value : root ? root.innerHTML : null },
-                headers = "Content-Type: " + (type || "text/html")
+                dataType = type || "text/html",
+                headers = "Content-Type: " + dataType
 
+              options.dataType = dataType;
+              options.dataTypes = toJQueryProcessibleDataTypes(dataType);
               completeCallback(status, statusText, responses, headers);
 
               setTimeout(cleanUp, 50);
