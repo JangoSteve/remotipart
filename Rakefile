@@ -42,11 +42,7 @@ rescue LoadError
   end
 end
 
-task :test => :check_dependencies
-
-task :default => :test
-
-require 'rake/rdoctask'
+require 'rdoc/task'
 require File.expand_path('../lib/remotipart/rails/version', __FILE__)
 Rake::RDocTask.new do |rdoc|
   version = Remotipart::Rails::VERSION
