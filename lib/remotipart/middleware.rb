@@ -11,7 +11,7 @@ module Remotipart
       # For some reason, in Rails 3.0, `env['rack.request.form_hash']`
       # isn't populated unless we manually initialize a new Rack::Request
       # and call the `POST` method on it
-      if ::Rails.version < "3.1"
+      if ::Rails.version.to_s < "3.1"
         Rack::Request.new(env).POST
       end
       params = env['rack.request.form_hash']
