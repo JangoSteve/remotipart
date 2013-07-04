@@ -151,14 +151,14 @@
           name = value.name;
           value = value.value;
         }
-        addedFields.push($("<input type='hidden'>").attr("name", name)
+        addedFields.push($("<input>").attr('type', 'hidden').attr("name", name)
           .attr("value", value).appendTo(form));
       });
 
       // Add a hidden `X-Requested-With` field with the value `IFrame` to the
       // field, to help server-side code to determine that the upload happened
       // through this transport.
-      addedFields.push($("<input type='hidden' name='X-Requested-With'>")
+      addedFields.push($("<input>").attr('name', 'X-Requested-With').attr('type', 'hidden')
         .attr("value", "IFrame").appendTo(form));
 
       // Borrowed straight from the JQuery source
@@ -167,7 +167,7 @@
         options.accepts[ options.dataTypes[0] ] + ( options.dataTypes[ 0 ] !== "*" ? ", */*; q=0.01" : "" ) :
         options.accepts[ "*" ]
 
-      addedFields.push($("<input type='hidden' name='X-Http-Accept'>")
+      addedFields.push($("<input>").attr('name', 'X-Http-Accept').attr('type', 'hidden')
         .attr("value", accepts).appendTo(form));
 
       return {
@@ -175,8 +175,7 @@
         // The `send` function is called by jQuery when the request should be
         // sent.
         send: function(headers, completeCallback) {
-          iframe = $("<iframe src='javascript:false;' name='iframe-" + $.now()
-            + "' style='display:none'></iframe>");
+          iframe = $("<iframe></iframe>").attr('src', 'javascript:false;').attr('name', 'iframe-" + $.now() + "').attr('style', 'display:none');
 
           // The first load event gets fired after the iframe has been injected
           // into the DOM, and is used to prepare the actual submission.
