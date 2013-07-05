@@ -39,6 +39,7 @@
           if ($.rails.fire(form, 'ajax:remotipartSubmit', [xhr, settings])) {
             // Second verse, same as the first
             $.rails.ajax(settings);
+            $.rails.disableFormElements(form);
           }
 
           //Run cleanup
