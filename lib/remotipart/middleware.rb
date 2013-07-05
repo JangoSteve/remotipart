@@ -8,13 +8,8 @@ module Remotipart
     end
 
     def call env
-      # For some reason, in Rails 3.0, `env['rack.request.form_hash']`
-      # isn't populated unless we manually initialize a new Rack::Request
-      # and call the `POST` method on it
-      if ::Rails.version < "3.1"
-        Rack::Request.new(env).POST
-      end
-      params = env['rack.request.form_hash']
+      # Get request params
+      params = Rack::Request.new(env).params
 
       # This was using an iframe transport, and is therefore an XHR
       # This is required if we're going to override the http_accept
