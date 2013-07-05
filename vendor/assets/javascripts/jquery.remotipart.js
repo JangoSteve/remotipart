@@ -8,6 +8,9 @@
   $.remotipart = remotipart = {
 
     setup: function(form) {
+      // Preserve form.data('ujs:submit-button') before it gets nulled by $.ajax.handleRemote
+      var button = form.data('ujs:submit-button');
+
       form
         // Allow setup part of $.rails.handleRemote to setup remote settings before canceling default remote handler
         // This is required in order to change the remote settings using the form details
@@ -20,6 +23,10 @@
           settings.iframe      = true;
           settings.files       = $($.rails.fileInputSelector, form);
           settings.data        = form.serializeArray();
+
+          // Insert the name/value of the clicked submit button, if any
+          if (button)
+            settings.data.push(button);
 
           // jQuery 1.9 serializeArray() contains input:file entries
           // so exclude them from settings.data, otherwise files will not be sent
