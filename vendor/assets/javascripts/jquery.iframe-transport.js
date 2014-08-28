@@ -127,7 +127,8 @@
     options.dataTypes.shift();
 
     if (files.length) {
-      form = $("<form enctype='multipart/form-data' method='post'></form>").
+      options.type = (options.type || options.method).toLowerCase() || 'post';
+      form = $("<form enctype='multipart/form-data' method='" + options.type + "'></form>").
         hide().attr({action: options.url, target: name});
 
       // If there is any additional data specified via the `data` option,
