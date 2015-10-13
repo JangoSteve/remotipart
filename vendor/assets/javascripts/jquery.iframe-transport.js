@@ -96,14 +96,14 @@
   // switches to the "iframe" data type if it is `true`.
   $.ajaxPrefilter(function(options, origOptions, jqXHR) {
     if (options.iframe) {
-      return "iframe";
+      return "remotipart.iframe";
     }
   });
 
   // Register a transport for the "iframe" data type. It will only activate
   // when the "files" option has been set to a non-empty list of enabled file
   // inputs.
-  $.ajaxTransport("iframe", function(options, origOptions, jqXHR) {
+  $.ajaxTransport("remotipart.iframe", function(options, origOptions, jqXHR) {
     var form = null,
         iframe = null,
         name = "iframe-" + $.now(),
