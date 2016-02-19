@@ -1,6 +1,6 @@
 module Remotipart
 
-  # A middleware to look for our form parameters and 
+  # A middleware to look for our form parameters and
   # encourage Rails to respond with the requested format
   class Middleware
     def initialize app
@@ -9,7 +9,10 @@ module Remotipart
 
     def call env
       # Get request params
-      params = Rack::Request.new(env).params
+      begin
+        params = Rack::Request.new(env).params
+      rescue
+      end
 
       if params
         # This was using an iframe transport, and is therefore an XHR
