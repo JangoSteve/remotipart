@@ -7,6 +7,13 @@ module Remotipart
     def self.included(base)
       base.class_eval do
         alias_method_chain :render, :remotipart
+        before_action :set_response_content_type
+      end
+    end
+
+    def set_response_content_type
+      if remotipart_submitted?
+        response.content_type = Mime[:html]
       end
     end
 
@@ -15,7 +22,6 @@ module Remotipart
       if remotipart_submitted?
         textarea_body = response.content_type == 'text/html' ? html_escape(response.body) : response.body
         response.body = %{<script type=\"text/javascript\">try{window.parent.document;}catch(err){document.domain=document.domain;}</script>#{textarea_body}}
-        response.content_type = Mime::HTML
       end
       response_body
     end
