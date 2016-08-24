@@ -115,6 +115,9 @@
     // and should revert all changes made to the page to enable the
     // submission via this transport.
     function cleanUp() {
+      for (var i = 0; i < files.length; i++) {
+        lastForm.find('#' + files[i].id).replaceWith(files[i]);
+      }
       markers.each(function(i){
         $(this).replaceWith(files[i]);
         markers.splice(i, 1);
