@@ -178,7 +178,7 @@
         // The `send` function is called by jQuery when the request should be
         // sent.
         send: function(headers, completeCallback) {
-          iframe = $("<iframe src='javascript:false;' name='" + name +
+          iframe = $("<iframe src='about:blank' name='" + name +
             "' id='" + name + "' style='display:none'></iframe>");
 
           // The first load event gets fired after the iframe has been injected
