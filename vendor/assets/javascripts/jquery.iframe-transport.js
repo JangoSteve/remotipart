@@ -117,8 +117,8 @@
     function cleanUp() {
       markers.each(function(i){
         $(this).replaceWith(files[i]);
-        markers.splice(i, 1);
       });
+      markers.splice(0, markers.length);
       form.remove();
       iframe.bind("load", function() { iframe.remove(); });
       iframe.attr("src", "about:blank");
