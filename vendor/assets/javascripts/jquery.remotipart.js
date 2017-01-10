@@ -37,7 +37,7 @@
             for (var j = settings.data.length - 1; j >= 0; j--)
               if (settings.data[j].name == file.name)
                 settings.data.splice(j, 1);
-          })
+          });
 
           settings.processData = false;
 
@@ -72,7 +72,7 @@
     teardown: function(form) {
       form
         .unbind('ajax:beforeSend.remotipart')
-        .removeData('remotipartSubmitted')
+        .removeData('remotipartSubmitted');
     }
   };
 

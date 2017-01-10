@@ -159,7 +159,7 @@
       // Provides a way of specifying the accepted data type similar to HTTP_ACCEPTS
       accepts = options.dataTypes[ 0 ] && options.accepts[ options.dataTypes[0] ] ?
         options.accepts[ options.dataTypes[0] ] + ( options.dataTypes[ 0 ] !== "*" ? ", */*; q=0.01" : "" ) :
-        options.accepts[ "*" ]
+        options.accepts[ "*" ];
 
       $("<input type='hidden' name='X-Http-Accept'>")
         .attr("value", accepts).appendTo(form);
