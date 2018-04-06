@@ -51,7 +51,7 @@
           // Allow remotipartSubmit to be cancelled if needed
           if ($.rails.fire(form, 'ajax:remotipartSubmit', [xhr, settings])) {
             // Second verse, same as the first
-            $.rails.ajax(settings).complete(function(data){
+            $.ajax(settings).done(function(data){
               $.rails.fire(form, 'ajax:remotipartComplete', [data]);
             });
             setTimeout(function(){ $.rails.disableFormElements(form); }, 20);
