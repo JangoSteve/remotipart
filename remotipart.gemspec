@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
     "lib/remotipart/rails/railtie.rb",
     "lib/remotipart/rails/version.rb",
     "lib/remotipart/render_overrides.rb",
+    "lib/remotipart/redirect_to_overrides.rb",
     "lib/remotipart/request_helper.rb",
     "lib/remotipart/view_helper.rb",
     "remotipart.gemspec",

@@ -11,6 +11,7 @@ module Remotipart
       initializer "remotipart.controller_helper" do
         ActionController::Base.send :include, RequestHelper
         ActionController::Base.send :include, RenderOverrides
+        ActionController::Base.send :include, RedirectToOverrides
       end
 
       initializer "remotipart.include_middelware" do
