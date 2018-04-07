@@ -24,8 +24,8 @@ module Remotipart
         end
 
         # Override the accepted format, because it isn't what we really want
-        if params['X-HTTP-Accept']
-          env['HTTP_ACCEPT'] = params['X-HTTP-Accept']
+        if params['X-Http-Accept']
+          env['HTTP_ACCEPT'] = params['X-Http-Accept']
         end
       end
 
