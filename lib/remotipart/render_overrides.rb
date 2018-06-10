@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Remotipart
   # Responder used to automagically wrap any non-xml replies in a text-area
   # as expected by iframe-transport.

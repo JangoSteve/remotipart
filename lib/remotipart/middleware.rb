@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 module Remotipart
 
   # A middleware to look for our form parameters and
   # encourage Rails to respond with the requested format
   class Middleware
-    def initialize app
+    def initialize(app)
       @app = app
     end
 
-    def call env
+    def call(env)
       # Get request params
       begin
         params = Rack::Request.new(env).params

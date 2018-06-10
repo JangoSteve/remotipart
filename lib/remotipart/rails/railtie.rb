@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Configure Rails 3.0 to use form.js and remotipart
 module Remotipart
   module Rails
@@ -5,7 +7,7 @@ module Remotipart
     class Railtie < ::Rails::Railtie
       config.before_configuration do
         # Files to be added to :defaults
-        FILES = ['jquery.iframe-transport', 'jquery.remotipart']
+        FILES = ['jquery.iframe-transport', 'jquery.remotipart'].freeze
 
         # Figure out where rails.js (aka jquery_ujs.js if install by jquery-rails gem) is
         # in the :defaults array
@@ -22,21 +24,21 @@ module Remotipart
         end
       end
 
-      initializer "remotipart.view_helper" do
+      initializer 'remotipart.view_helper' do
         ActiveSupport.on_load(:action_view) do
           include RequestHelper
           include ViewHelper
         end
       end
 
-      initializer "remotipart.controller_helper" do
+      initializer 'remotipart.controller_helper' do
         ActiveSupport.on_load(:action_controller) do
           include RequestHelper
           include RenderOverrides
         end
       end
 
-      initializer "remotipart.include_middelware" do
+      initializer 'remotipart.include_middelware' do
         config.app_middleware.insert_after ActionDispatch::ParamsParser, Middleware
       end
     end
