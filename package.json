@@ -1,0 +1,14 @@
+{
+  "name": "remotipart",
+  "version": "1.4.2",
+  "description": "JS assets for rails jQuery file uploads via standard Rails 'remote: true' forms.",
+  "main": "vendor/assets/javascripts/jquery.remotipart.module.js",
+  "files": [
+    "vendor/assets/javascripts/jquery.iframe-transport.js",
+    "vendor/assets/javascripts/jquery.remotipart.library.js"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "jquery": ">= 1.12"
+  }
+}
