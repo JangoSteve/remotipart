@@ -210,7 +210,6 @@
                 status = textarea && textarea.getAttribute("data-status") || 200,
                 statusText = textarea && textarea.getAttribute("data-statusText") || "OK",
                 content = {
-                  html: root.innerHTML,
                   text: type ?
                     textarea.value :
                     root ? (root.textContent || root.innerText) : null
