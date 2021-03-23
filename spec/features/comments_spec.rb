@@ -115,7 +115,7 @@ describe 'comments', type: :feature do
 
   it "triggers ajax:remotipartSubmit event hook", js: true do
     visit root_path
-    page.execute_script("$(document).delegate('form', 'ajax:remotipartSubmit', function() { $('#comments').after('remotipart!'); });")
+    page.execute_script("$(document).on('ajax:remotipartSubmit', 'form', function() { $('#comments').after('remotipart!'); });")
 
     click_link 'New Comment with Attachment'
 
@@ -129,7 +129,7 @@ describe 'comments', type: :feature do
 
   it "allows remotipart submission to be cancelable via event hook", js: true do
     visit root_path
-    page.execute_script("$(document).delegate('form', 'ajax:remotipartSubmit', function() { $('#comments').after('remotipart!'); return false; });")
+    page.execute_script("$(document).on('ajax:remotipartSubmit', 'form', function() { $('#comments').after('remotipart!'); return false; });")
 
     click_link 'New Comment with Attachment'
 
@@ -150,7 +150,7 @@ describe 'comments', type: :feature do
 
   it "allows custom data-type on form", js: true do
     visit root_path
-    page.execute_script("$(document).delegate('form', 'ajax:success', function(evt, data, status, xhr) { $('#comments').after(xhr.responseText); });")
+    page.execute_script("$(document).on('ajax:success', 'form', function(evt, data, status, xhr) { $('#comments').after(xhr.responseText); });")
 
     click_link 'New Comment with Attachment'
 
@@ -169,7 +169,7 @@ describe 'comments', type: :feature do
 
   it "allows users to use ajax response data safely", js: true do
     visit root_path
-    page.execute_script("$(document).delegate('form', 'ajax:success', function(evt, data, status, xhr) { $('#comments').after(data); });")
+    page.execute_script("$(document).on('ajax:success', 'form', function(evt, data, status, xhr) { $('#comments').after(data); });")
 
     click_link 'New Comment with Attachment'
 
@@ -188,7 +188,7 @@ describe 'comments', type: :feature do
 
   it "escapes html response content properly", js: true do
     visit root_path
-    page.execute_script("$(document).delegate('form', 'ajax:success', function(evt, data, status, xhr) { $('#comments').after(xhr.responseText); });")
+    page.execute_script("$(document).on('ajax:success', 'form', function(evt, data, status, xhr) { $('#comments').after(xhr.responseText); });")
 
     click_link 'New Comment with Attachment'
 
@@ -212,7 +212,7 @@ describe 'comments', type: :feature do
     click_link 'New Comment with Attachment'
     # Needed to make test wait for above to finish
     input = find('#comment_subject')
-    page.execute_script("$('#comment_subject').removeAttr('required');")
+    page.execute_script("$('#comment_subject').prop('required', false);")
 
     file_path = File.join(fixture_path, 'qr.jpg')
     fill_in 'comment_body', with: 'there'
@@ -244,7 +244,7 @@ describe 'comments', type: :feature do
 
   it "does not submit via remotipart unless file is present", js: true do
     visit root_path
-    page.execute_script("$(document).delegate('form', 'ajax:remotipartSubmit', function() { $('#comments').after('remotipart!'); });")
+    page.execute_script("$(document).on('ajax:remotipartSubmit', 'form', function() { $('#comments').after('remotipart!'); });")
 
     click_link 'New Comment with Attachment'
 
@@ -262,9 +262,9 @@ describe 'comments', type: :feature do
     # Needed to make test wait for above to finish
     form = find('form')
 
-    page.execute_script("$('form').bind('ajax:beforeSend', function() { $('#comments').after('thebefore'); });")
-    page.execute_script("$(document).delegate('form', 'ajax:success', function() { $('#comments').after('success'); });")
-    page.execute_script("$(document).delegate('form', 'ajax:complete', function() { $('#comments').after('complete'); });")
+    page.execute_script("$('form').on('ajax:beforeSend', function() { $('#comments').after('thebefore'); });")
+    page.execute_script("$(document).on('ajax:success', 'form', function() { $('#comments').after('success'); });")
+    page.execute_script("$(document).on('ajax:complete', 'form', function() { $('#comments').after('complete'); });")
 
     file_path = File.join(fixture_path, 'qr.jpg')
     fill_in 'comment_subject', with: 'Hi'
@@ -286,9 +286,9 @@ describe 'comments', type: :feature do
 
     page.execute_script("$('form').data('type', 'json');")
 
-    page.execute_script("$('form').bind('ajax:beforeSend', function() { $('#comments').after('thebefore'); });")
-    page.execute_script("$(document).delegate('form', 'ajax:success', function() { $('#comments').after('success'); });")
-    page.execute_script("$(document).delegate('form', 'ajax:complete', function() { $('#comments').after('complete'); });")
+    page.execute_script("$('form').on('ajax:beforeSend', function() { $('#comments').after('thebefore'); });")
+    page.execute_script("$(document).on('ajax:success', 'form', function() { $('#comments').after('success'); });")
+    page.execute_script("$(document).on('ajax:complete', 'form', function() { $('#comments').after('complete'); });")
 
     file_path = File.join(fixture_path, 'qr.jpg')
     fill_in 'comment_subject', with: 'Hi'
@@ -308,7 +308,7 @@ describe 'comments', type: :feature do
     # Needed to make test wait for above to finish
     form = find('form')
 
-    page.execute_script("$('form').bind('ajax:beforeSend', function() { $('#comments').after('<div class=\"ajax\">ajax!</div>'); });")
+    page.execute_script("$('form').on('ajax:beforeSend', function() { $('#comments').after('<div class=\"ajax\">ajax!</div>'); });")
 
     file_path = File.join(fixture_path, 'qr.jpg')
     fill_in 'comment_subject', with: 'Hi'
@@ -321,7 +321,7 @@ describe 'comments', type: :feature do
 
   it "cleans up after itself when uploading files", js: true do
     visit root_path
-    page.execute_script("$(document).delegate('form', 'ajax:remotipartSubmit', function(evt, xhr, data) { if ($(this).data('remotipartSubmitted')) { $('#comments').after('remotipart before!'); } });")
+    page.execute_script("$(document).on('ajax:remotipartSubmit', 'form', function(evt, xhr, data) { if ($(this).data('remotipartSubmitted')) { $('#comments').after('remotipart before!'); } });")
 
     click_link 'New Comment with Attachment'
     page.execute_script("$('form').attr('data-type', 'html');")
@@ -340,7 +340,7 @@ describe 'comments', type: :feature do
 
   it "submits via remotipart when a file upload is present", js: true do
     visit root_path
-    page.execute_script("$(document).delegate('form', 'ajax:remotipartSubmit', function(evt, xhr, data) { $('#comments').after('<div class=\"remotipart\">remotipart!</div>'); });")
+    page.execute_script("$(document).on('ajax:remotipartSubmit', 'form', function(evt, xhr, data) { $('#comments').after('<div class=\"remotipart\">remotipart!</div>'); });")
 
     click_link 'New Comment with Attachment'
     page.execute_script("$('form').attr('data-type', 'html');")
@@ -356,7 +356,7 @@ describe 'comments', type: :feature do
 
   it "does not submit via remotipart when a file upload is not present", js: true do
     visit root_path
-    page.execute_script("$(document).delegate('form', 'ajax:remotipartSubmit', function(evt, xhr, data) { $('#comments').after('<div class=\"remotipart\">remotipart!</div>'); });")
+    page.execute_script("$(document).on('ajax:remotipartSubmit', 'form', function(evt, xhr, data) { $('#comments').after('<div class=\"remotipart\">remotipart!</div>'); });")
 
     click_link 'New Comment with Attachment'
     page.execute_script("$('form').attr('data-type', 'html');")
@@ -375,7 +375,7 @@ describe 'comments', type: :feature do
 
     button = find_button('Create Comment')
     # clicking 'Create Comment' button causes capybara evaluation freeze until request ends, so perform check by JavaScript
-    page.execute_script("$('form').bind('ajax:remotipartComplete', function(data) { window.commitButtonDisabled = $('input[name=\"commit\"]').is(':disabled'); window.commitButtonValue = $('input[name=\"commit\"]').val(); });")
+    page.execute_script("$('form').on('ajax:remotipartComplete', function(data) { window.commitButtonDisabled = $('input[name=\"commit\"]').is(':disabled'); window.commitButtonValue = $('input[name=\"commit\"]').val(); });")
 
     file_path = File.join(fixture_path, 'qr.jpg')
     fill_in 'comment_subject', with: 'Hi'
@@ -395,7 +395,7 @@ describe 'comments', type: :feature do
     click_link 'New Comment with Attachment'
 
     form = find('form')
-    page.execute_script("$('form').bind('ajax:remotipartSubmit', function(e, xhr, settings) { $('#comments').after('<div class=\"params\">' + $.param(settings.data) + '</div>'); });")
+    page.execute_script("$('form').on('ajax:remotipartSubmit', function(e, xhr, settings) { $('#comments').after('<div class=\"params\">' + $.param(settings.data) + '</div>'); });")
 
     file_path = File.join(fixture_path, 'qr.jpg')
     fill_in 'comment_subject', with: 'Hi'
